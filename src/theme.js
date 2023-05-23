@@ -9,9 +9,12 @@ export const theme = createTheme({
       accent: "#d10a14",
     },
     neutral: {
-      main: "#373737",
+      main: "rgba(2, 106, 180, 0.2)",
       light: "rgba(255, 255, 255, 0.4)",
       accent: "rgba(209, 10, 20, 0.4)",
+    },
+    secondary: {
+      main: "#ffffff",
     },
   },
 

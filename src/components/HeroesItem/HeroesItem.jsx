@@ -1,3 +1,4 @@
+import { useLocation, Link } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -16,13 +17,19 @@ import {
   cardName,
 } from "./heroesItemStyles";
 
-export const HeroesItem = ({ nickname, images }) => {
+export const HeroesItem = ({ id, nickname, images }) => {
+  const location = useLocation();
   const previewImg = images[0];
 
   return (
     <ListItem sx={listItem}>
       <Card sx={card}>
-        <CardActionArea sx={cardAction}>
+        <CardActionArea
+          sx={cardAction}
+          component={Link}
+          to={`/heroes/${id}`}
+          state={{ from: location }}
+        >
           <CardMedia
             component="img"
             image={previewImg ? previewImg : NoImg}

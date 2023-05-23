@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
-import { Container } from "components/Container/Container";
-import { Wrapper } from "components/Wrapper/Wrapper";
 import { HeroesList } from "components/HeroesList/HeroesList";
+import { Pagination } from "components/Pagination/Pagination";
 import { getHeroes } from "services/heroesApi";
 
 export const Heroes = () => {
   const [heroes, setHeroes] = useState([]);
+  const [page, setPage] = useState(1);
   // const [isLoading, setIsLoading] = useState(false);
 
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
   useEffect(() => {
-    getHeroes().then(setHeroes);
-  }, []);
+    getHeroes(page).then(setHeroes);
+  }, [page]);
 
   return (
-    <Container>
-      <Wrapper>
-        <HeroesList heroes={heroes} />
-      </Wrapper>
-    </Container>
+    <>
+      <HeroesList heroes={heroes} />
+      <Pagination page={page} onChange={handleChangePage} totalHits={3} />
+    </>
   );
 };
