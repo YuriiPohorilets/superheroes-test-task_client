@@ -20,7 +20,6 @@ export const Dropzone = ({ setFieldValue }) => {
 
     onDrop: (acceptedFiles) => {
       setFieldValue("images", acceptedFiles);
-
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -29,6 +28,9 @@ export const Dropzone = ({ setFieldValue }) => {
         )
       );
     },
+
+    multiple: true,
+    maxFiles: 12,
   });
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export const Dropzone = ({ setFieldValue }) => {
   return (
     <Box>
       <Box {...getRootProps({ className: "dropzone" })} sx={inputWrapper}>
-        <input {...getInputProps()} type="file" multiple />
+        <input {...getInputProps()} />
 
         <Typography sx={text}>
           Drag 'n' drop some images here, or click to select images

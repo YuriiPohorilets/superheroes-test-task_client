@@ -26,18 +26,22 @@ export const getHeroeDetails = async (heroId) => {
 
 export const createHero = async (hero) => {
   try {
-    console.log(hero);
-    console.log(hero.images);
-    const { data } = await axios.post(
-      `/heroes`,
-      { ...hero },
-      {
-        headers: {
-          Accept: "*/*",
-          "Content-Type": "application/json,multipart/form-data",
-        },
-      }
-    );
+    const { data } = await axios.post("/heroes", hero, {
+      headers: {
+        "Content-Type": "application/json,multipart/form-data",
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};
+
+export const deleteHero = async (heroId) => {
+  try {
+    const { data } = await axios.delete(`/heroes/${heroId}`);
 
     return data;
   } catch (error) {

@@ -15,11 +15,12 @@ import { createHeroSchema } from "schemas/createHeroSchema";
 import { createHero } from "services/heroesApi";
 import { Dropzone } from "components/Dropzone/Dropzone";
 import { outlinedBtn, containedBtn } from "shared/commonStyles";
+import { title, formWrapper, input } from "./createHeroStyles";
 
 const initialValues = {
-  nickname: "Dropzone upload test",
-  realName: "Test",
-  originDescription: "Some text",
+  nickname: "",
+  realName: "",
+  originDescription: "",
   superpowers: [],
   catchPhrase: [],
   images: null,
@@ -41,6 +42,7 @@ export const CreateHero = () => {
   } = useFormik({
     initialValues,
     validationSchema: createHeroSchema,
+
     onSubmit: async (newHero) => {
       const {
         nickname,
@@ -50,19 +52,15 @@ export const CreateHero = () => {
         catchPhrase,
         images,
       } = newHero;
-      console.log(images);
-      try {
-        await createHero({
-          nickname,
-          realName,
-          originDescription,
-          superpowers,
-          catchPhrase,
-          images,
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
+
+      await createHero({
+        nickname,
+        realName,
+        originDescription,
+        superpowers,
+        catchPhrase,
+        images: images.map((image) => image),
+      });
 
       resetForm();
     },
@@ -94,23 +92,13 @@ export const CreateHero = () => {
         aria-labelledby="responsive-dialog-title"
         maxWidth="md"
       >
-        <DialogTitle
-          id="responsive-dialog-title"
-          sx={{ fontSize: "24px", fontWeight: 700, textTransform: "uppercase" }}
-        >
+        <DialogTitle id="responsive-dialog-title" sx={title}>
           Create new superhero
         </DialogTitle>
 
         <DialogContent>
           <Box component="form" noValidate onSubmit={handleSubmit}>
-            <Box
-              sx={{
-                display: "flex",
-                gap: "32px",
-                flexWrap: "wrap",
-                mb: "24px",
-              }}
-            >
+            <Box sx={formWrapper}>
               <TextField
                 variant="standard"
                 id="nickname"
@@ -120,11 +108,7 @@ export const CreateHero = () => {
                 onChange={handleChange}
                 error={touched.nickname && !!errors.nickname}
                 helperText={touched.nickname && errors.nickname}
-                sx={{
-                  width: "300px",
-                  flex: "1 0 auto",
-                  textTransform: "uppercase",
-                }}
+                sx={input}
               />
 
               <TextField
@@ -136,11 +120,7 @@ export const CreateHero = () => {
                 onChange={handleChange}
                 error={touched.realName && !!errors.realName}
                 helperText={touched.realName && errors.realName}
-                sx={{
-                  width: "300px",
-                  flex: "1 0 auto",
-                  textTransform: "uppercase",
-                }}
+                sx={input}
               />
 
               <TextField
@@ -156,11 +136,7 @@ export const CreateHero = () => {
                 helperText={
                   touched.originDescription && errors.originDescription
                 }
-                sx={{
-                  width: "100%",
-                  flex: "1 0 auto",
-                  textTransform: "uppercase",
-                }}
+                sx={{ ...input, width: "100%" }}
               />
 
               <TextField
@@ -172,11 +148,7 @@ export const CreateHero = () => {
                 onChange={handleChange}
                 error={touched.superpowers && !!errors.superpowers}
                 helperText={touched.superpowers && errors.superpowers}
-                sx={{
-                  width: "300px",
-                  flex: "1 0 auto",
-                  textTransform: "uppercase",
-                }}
+                sx={input}
               />
 
               <TextField
@@ -188,11 +160,7 @@ export const CreateHero = () => {
                 onChange={handleChange}
                 error={touched.catchPhrase && !!errors.catchPhrase}
                 helperText={touched.catchPhrase && errors.catchPhrase}
-                sx={{
-                  width: "300px",
-                  flex: "1 0 auto",
-                  textTransform: "uppercase",
-                }}
+                sx={input}
               />
             </Box>
 
