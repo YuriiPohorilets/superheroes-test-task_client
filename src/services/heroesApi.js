@@ -26,8 +26,19 @@ export const getHeroeDetails = async (heroId) => {
 
 export const createHero = async (hero) => {
   try {
-    const { data } = await axios.post(`/heroes`, { ...hero });
-    console.log(data);
+    console.log(hero);
+    console.log(hero.images);
+    const { data } = await axios.post(
+      `/heroes`,
+      { ...hero },
+      {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json,multipart/form-data",
+        },
+      }
+    );
+
     return data;
   } catch (error) {
     console.log(error.message);

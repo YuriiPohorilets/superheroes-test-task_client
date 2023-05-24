@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import NoImg from "img/noImg.jpg";
 
 export const HeroCard = ({ hero }) => {
@@ -13,25 +13,106 @@ export const HeroCard = ({ hero }) => {
 
   return (
     <Box sx={{ mt: "32px", display: "flex", gap: "32px" }}>
-      <img
-        src={images[0] ? images[0] : NoImg}
-        alt={nickname}
-        style={{ borderRadius: "16px" }}
-        width={365}
-        height={500}
+      <Box
+        sx={{
+          minWidth: "360px",
+          height: "500px",
+          borderRadius: "16px",
+          overflow: "hidden",
+          boxShadow: 3,
+        }}
+      >
+        <Box
+          component="img"
+          src={images[0] ? images[0] : NoImg}
+          alt={nickname}
+          width={365}
+          height={500}
+          sx={{ objectFit: "cover" }}
+        />
+      </Box>
+
+      <Divider
+        orientation="vertical"
+        flexItem
+        sx={{ bgcolor: "neutral.light" }}
       />
-      <Box sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <Typography>Nickname: {nickname}</Typography>
-        <Typography>Real name: {realName}</Typography>
-        <Typography>Description: {originDescription}</Typography>
 
-        {superpowers.map((power) => (
-          <p key={power}>{power}</p>
-        ))}
+      <Box sx={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+        <Typography
+          sx={{ fontSize: "22px", fontWeight: 700, textTransform: "uppercase" }}
+        >
+          Nickname:{" "}
+          <Typography
+            component="span"
+            sx={{ fontSize: "22px", fontWeight: 300, textTransform: "none" }}
+          >
+            {nickname}
+          </Typography>
+        </Typography>
 
-        {catchPhrase.map((phrase) => (
-          <p key={phrase}>{phrase}</p>
-        ))}
+        <Typography
+          sx={{ fontSize: "22px", fontWeight: 700, textTransform: "uppercase" }}
+        >
+          Real name:{" "}
+          <Typography
+            component="span"
+            sx={{ fontSize: "22px", fontWeight: 300, textTransform: "none" }}
+          >
+            {realName}
+          </Typography>
+        </Typography>
+
+        <Typography
+          sx={{ fontSize: "22px", fontWeight: 700, textTransform: "uppercase" }}
+        >
+          Description:{" "}
+          <Typography
+            component="span"
+            sx={{
+              fontSize: "22px",
+              fontWeight: 300,
+              textTransform: "none",
+            }}
+          >
+            {originDescription}
+          </Typography>
+        </Typography>
+
+        <Typography
+          sx={{ fontSize: "22px", fontWeight: 700, textTransform: "uppercase" }}
+        >
+          Superpowers:{" "}
+          {superpowers.map((power) => (
+            <Typography
+              key={power}
+              component="span"
+              sx={{ fontSize: "22px", fontWeight: 300, textTransform: "none" }}
+            >
+              {power},{" "}
+            </Typography>
+          ))}
+        </Typography>
+
+        <Typography
+          sx={{ fontSize: "22px", fontWeight: 700, textTransform: "uppercase" }}
+        >
+          Catch phrases:{" "}
+          {catchPhrase.map((phrase) => (
+            <Typography
+              key={phrase}
+              component="span"
+              sx={{
+                fontSize: "22px",
+                fontWeight: 300,
+                textTransform: "none",
+                fontStyle: "italic",
+              }}
+            >
+              "{phrase}",{" "}
+            </Typography>
+          ))}
+        </Typography>
       </Box>
     </Box>
   );
