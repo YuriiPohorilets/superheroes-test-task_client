@@ -45,18 +45,9 @@ export const CreateHero = () => {
       validationSchema: createHeroSchema,
 
       onSubmit: async newHero => {
-        const { nickname, realName, originDescription, superpowers, catchPhrase, images } = newHero;
-
         setIsLoading(true);
 
-        const createdHero = await createHero({
-          nickname,
-          realName,
-          originDescription,
-          superpowers: superpowers.split(','),
-          catchPhrase: catchPhrase.split(','),
-          images,
-        });
+        const createdHero = await createHero(newHero);
 
         if (createdHero.error) {
           toast(createdHero.error.message, {
@@ -67,9 +58,9 @@ export const CreateHero = () => {
           return;
         }
 
-        setHeroes(prevHeroes => [createdHero, ...prevHeroes]);
         setIsLoading(false);
         handleClose();
+        setHeroes(prevHeroes => [createdHero, ...prevHeroes]);
         navigate('/heroes');
         resetForm();
       },

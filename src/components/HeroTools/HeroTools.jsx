@@ -1,34 +1,17 @@
 import { Box, Button } from '@mui/material';
 import { outlinedBtn } from 'shared/commonStyles';
 
-export const HeroTools = ({ handleClickOpenDialog, isEditing, handleEdit, openModal }) => {
+export const HeroTools = ({ handleClickOpenDialog, isEditing, handleEdit }) => {
   return (
-    <Box sx={{ display: 'flex', gap: '8px', mb: '24px' }}>
+    <Box sx={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
       {isEditing ? (
         <>
-          <Box sx={{ ml: '24px' }}>
-            <Button
-              onClick={openModal}
-              variant="outlined"
-              sx={{
-                ...outlinedBtn,
-                '&:hover': {
-                  bgcolor: 'neutral.darker',
-                  borderColor: 'primary.darker',
-                  boxShadow: 3,
-                },
-                mr: '8px',
-              }}
-            >
-              Add image
-            </Button>
-
-            <Button onClick={handleClickOpenDialog} variant="outlined" sx={outlinedBtn}>
-              Delete hero
-            </Button>
-          </Box>
+          <Button onClick={handleClickOpenDialog} variant="outlined" sx={outlinedBtn}>
+            Delete hero
+          </Button>
 
           <Button
+            autoFocus
             type="submit"
             variant="outlined"
             sx={{

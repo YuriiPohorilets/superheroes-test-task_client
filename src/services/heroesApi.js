@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3001/api/';
+axios.defaults.baseURL = 'http://localhost:3001/api';
 
 export const getHeroes = async page => {
   try {
@@ -66,7 +66,7 @@ export const updateHero = async (heroId, hero) => {
   try {
     const { data } = await axios.patch(`/heroes/${heroId}`, hero, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json,multipart/form-data',
       },
     });
 

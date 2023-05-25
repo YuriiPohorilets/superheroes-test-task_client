@@ -3,9 +3,9 @@ export const inputWrapper = {
 
   textAlign: 'center',
 
-  bgcolor: 'neutral.main',
+  bgcolor: 'neutral.accent',
   border: '1px dashed',
-  borderColor: 'primary.main',
+  borderColor: 'primary.accent',
   borderRadius: '8px',
 
   cursor: 'pointer',
@@ -13,6 +13,7 @@ export const inputWrapper = {
 
 export const thumbsContainer = {
   mt: '16px',
+  width: '100%',
 
   display: 'flex',
   flexDirection: 'row',
@@ -25,7 +26,7 @@ export const thumb = {
   height: '100px',
 
   border: '1px solid',
-  borderColor: 'primary.darker',
+  borderColor: 'primary.accent',
   borderRadius: '8px',
 
   overflow: 'hidden',
@@ -49,5 +50,5 @@ export const img = {
 };
 
 export const text = {
-  color: 'primary.darker',
+  color: 'primary.light',
 };

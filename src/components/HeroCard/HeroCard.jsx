@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
-import { Box, Typography, Divider, TextField, Modal, Button } from '@mui/material';
+import { Box, Typography, Divider, TextField } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 import { ImageList } from 'components/ImagesList/ImagesList';
 import { HeroTools } from 'components/HeroTools/HeroTools';
@@ -13,51 +13,40 @@ import {
   title,
   container,
   mediaWrapper,
+  toolsWrapper,
   imgWrapper,
   previewImg,
   contentContainer,
   subtitle,
   input,
   textFieldWrapper,
+  inputEditing,
 } from './heroCardStyles';
 import 'react-toastify/dist/ReactToastify.css';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-  color: 'red',
-};
-
 export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenDialog }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [heroImages, setHeroImages] = useState(hero.images);
   const [prevImg, setPrevImg] = useState(heroImages[0]);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const initialValues = {
+    nickname: hero.nickname,
+    realName: hero.realName,
+    originDescription: hero.originDescription,
+    superpowers: hero.superpowers,
+    catchPhrase: hero.catchPhrase,
+    images: hero.images,
+  };
 
   const { handleSubmit, handleChange, setFieldValue, values, touched, errors } = useFormik({
-    initialValues: hero,
+    initialValues: initialValues,
     validationSchema: createHeroSchema,
 
     onSubmit: async newHero => {
-      const { nickname, realName, originDescription, superpowers, catchPhrase } = newHero;
-
       setIsLoading(true);
-
-      const updatedHero = await updateHero(heroId, {
-        nickname,
-        realName,
-        originDescription,
-        superpowers,
-        catchPhrase,
-        images: heroImages,
-      });
-
+      console.log(values);
+      const updatedHero = await updateHero(heroId, values);
+      console.log(newHero);
       if (updatedHero.error) {
         toast(updatedHero.error.message, {
           autoClose: 2000,
@@ -71,10 +60,6 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
       handleEdit(false);
     },
   });
-  const handleOpen = () => {
-    setIsOpenModal(true);
-  };
-  const handleClose = () => setIsOpenModal(false);
 
   const handleClickImg = imgUrl => setPrevImg(imgUrl);
 
@@ -85,28 +70,15 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
   return (
     <>
       <Box component="form" sx={container} onSubmit={handleSubmit}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+        <Box sx={toolsWrapper}>
           <Typography sx={title}>Hero details</Typography>
 
           <HeroTools
             handleClickOpenDialog={handleClickOpenDialog}
             handleEdit={handleEdit}
             isEditing={isEditing}
-            openModal={handleOpen}
           />
         </Box>
-
-        <Modal
-          open={isOpenModal}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Dropzone setFieldValue={setFieldValue} />
-            <Button type="submit">Add</Button>
-          </Box>
-        </Modal>
 
         {isLoading && <Loader />}
 
@@ -133,6 +105,8 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
           />
         </Box>
 
+        {isEditing && <Dropzone setFieldValue={setFieldValue} />}
+
         <Box sx={contentContainer}>
           <Box sx={textFieldWrapper}>
             <Typography sx={subtitle}>Nickname: </Typography>
@@ -148,7 +122,7 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.nickname && !!errors.nickname}
               helperText={touched.nickname && errors.nickname}
-              sx={input}
+              sx={isEditing ? inputEditing : input}
             />
           </Box>
 
@@ -165,7 +139,7 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.realName && !!errors.realName}
               helperText={touched.realName && errors.realName}
-              sx={input}
+              sx={isEditing ? inputEditing : input}
             />
           </Box>
 
@@ -184,7 +158,7 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.originDescription && !!errors.originDescription}
               helperText={touched.originDescription && errors.originDescription}
-              sx={input}
+              sx={isEditing ? inputEditing : input}
             />
           </Box>
 
@@ -202,7 +176,7 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.superpowers && !!errors.superpowers}
               helperText={touched.superpowers && errors.superpowers}
-              sx={input}
+              sx={isEditing ? inputEditing : input}
             />
           </Box>
 
@@ -220,7 +194,7 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.catchPhrase && !!errors.catchPhrase}
               helperText={touched.catchPhrase && errors.catchPhrase}
-              sx={input}
+              sx={isEditing ? inputEditing : input}
             />
           </Box>
         </Box>

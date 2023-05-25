@@ -3,6 +3,17 @@ export const title = {
   textAlign: { xs: 'center', md: 'left' },
 };
 
+export const toolsWrapper = {
+  width: '100%',
+
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexWrap: 'wrap',
+  gap: '16px',
+
+  alignItems: 'center',
+};
+
 export const container = {
   mt: '32px',
   mb: '40px',
@@ -16,14 +27,15 @@ export const mediaWrapper = {
   width: '100%',
 
   display: 'flex',
-  // justifyContent: "space-between",
-  // flexWrap: "wrap",
   gap: '16px',
+  flexDirection: { xs: 'column', md: 'row' },
 };
 
 export const imgWrapper = {
-  minWidth: '360px',
+  maxWidth: '360px',
   height: '500px',
+
+  flex: '1 0 auto',
 
   boxShadow: 3,
   borderRadius: '16px',
@@ -32,7 +44,8 @@ export const imgWrapper = {
 };
 
 export const previewImg = {
-  width: '365px',
+  maxWidth: '365px',
+  minWidth: '100%',
   height: '500px',
 
   objectFit: 'cover',
@@ -43,7 +56,7 @@ export const contentContainer = {
 
   display: 'flex',
   flexDirection: 'column',
-  gap: '4px',
+  gap: { xs: '32px', md: '16px' },
 };
 
 export const subtitle = {
@@ -68,9 +81,32 @@ export const input = {
   width: '100%',
 };
 
+export const inputEditing = {
+  '& .MuiInput-underline:before': { borderBottomColor: 'neutral.light' },
+  '& .MuiInput-underline': { color: '#fff', fontSize: '20px', bgcolor: 'neutral.light' },
+  '& .MuiInputBase-input.Mui-disabled': { WebkitTextFillColor: '#fff', fontSize: '20px' },
+
+  width: '100%',
+};
+
 export const textFieldWrapper = {
   display: 'flex',
   alignItems: 'flex-start',
-  gap: '54px',
-  justifyContent: 'space-between',
+  gap: { xs: '16px', md: '54px' },
+  flexDirection: { xs: 'column', md: 'row' },
+};
+
+export const modal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+
+  transform: 'translate(-50%, -50%)',
+
+  p: '16px',
+  width: 400,
+
+  bgcolor: 'primary.light',
+  boxShadow: 24,
+  borderRadius: '16px',
 };

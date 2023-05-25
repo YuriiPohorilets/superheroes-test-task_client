@@ -32,7 +32,7 @@ export const Dropzone = ({ setFieldValue }) => {
   }, [files]);
 
   return (
-    <Box>
+    <Box sx={{ width: 1 }}>
       <Box {...getRootProps({ className: 'dropzone' })} sx={inputWrapper}>
         <input {...getInputProps()} />
 
