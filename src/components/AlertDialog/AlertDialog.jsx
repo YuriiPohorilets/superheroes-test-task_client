@@ -1,4 +1,3 @@
-import { Link, useLocation } from "react-router-dom";
 import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { outlinedBtn, containedBtn } from "shared/commonStyles";
 
@@ -9,9 +8,6 @@ export const AlertDialog = ({
   heroId,
   handleClose,
 }) => {
-  const location = useLocation();
-  const backLink = location.state?.from ?? "/";
-
   return (
     <Dialog
       open={isOpen}
@@ -33,8 +29,6 @@ export const AlertDialog = ({
         </Button>
 
         <Button
-          component={Link}
-          to={backLink}
           onClick={() => onClick(heroId)}
           variant="outlined"
           autoFocus

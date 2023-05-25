@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   TextField,
@@ -12,8 +15,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { createHeroSchema } from "schemas/createHeroSchema";
-import { createHero } from "services/heroesApi";
 import { Dropzone } from "components/Dropzone/Dropzone";
+import { Loader } from "components/Loader/Loader";
+import { createHero } from "services/heroesApi";
+import { useHeroes } from "hooks/heroesContext";
 import { outlinedBtn, containedBtn } from "shared/commonStyles";
 import { title, formWrapper, input } from "./createHeroStyles";
 
@@ -21,15 +26,18 @@ const initialValues = {
   nickname: "",
   realName: "",
   originDescription: "",
-  superpowers: [],
-  catchPhrase: [],
+  superpowers: "",
+  catchPhrase: "",
   images: null,
 };
 
 export const CreateHero = () => {
+  const { setHeroes } = useHeroes();
   const [isOpen, setisOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { breakpoints } = useTheme();
   const fullScreen = useMediaQuery(breakpoints.down("md"));
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -53,15 +61,30 @@ export const CreateHero = () => {
         images,
       } = newHero;
 
-      await createHero({
+      setIsLoading(true);
+
+      const createdHero = await createHero({
         nickname,
         realName,
         originDescription,
-        superpowers,
-        catchPhrase,
-        images: images.map((image) => image),
+        superpowers: superpowers.split(","),
+        catchPhrase: catchPhrase.split(","),
+        images,
       });
 
+      if (createdHero.error) {
+        toast(createdHero.error.message, {
+          autoClose: 2000,
+          theme: "colored",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      setHeroes((prevHeroes) => [createdHero, ...prevHeroes]);
+      setIsLoading(false);
+      handleClose();
+      navigate("/heroes");
       resetForm();
     },
   });
@@ -95,6 +118,8 @@ export const CreateHero = () => {
         <DialogTitle id="responsive-dialog-title" sx={title}>
           Create new superhero
         </DialogTitle>
+
+        {isLoading && <Loader />}
 
         <DialogContent>
           <Box component="form" noValidate onSubmit={handleSubmit}>
@@ -189,6 +214,8 @@ export const CreateHero = () => {
             </DialogActions>
           </Box>
         </DialogContent>
+
+        <ToastContainer />
       </Dialog>
     </>
   );

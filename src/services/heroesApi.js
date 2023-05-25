@@ -9,7 +9,10 @@ export const getHeroes = async (page) => {
     return data;
   } catch (error) {
     console.log(error.message);
-    return null;
+    return {
+      data: null,
+      error: error.response.data,
+    };
   }
 };
 
@@ -20,7 +23,10 @@ export const getHeroeDetails = async (heroId) => {
     return data;
   } catch (error) {
     console.log(error.message);
-    return null;
+    return {
+      data: null,
+      error: error.response.data,
+    };
   }
 };
 
@@ -28,14 +34,17 @@ export const createHero = async (hero) => {
   try {
     const { data } = await axios.post("/heroes", hero, {
       headers: {
-        "Content-Type": "application/json,multipart/form-data",
+        "Content-Type": "multipart/form-data",
       },
     });
 
     return data;
   } catch (error) {
     console.log(error.message);
-    return null;
+    return {
+      data: null,
+      error: error.response.data,
+    };
   }
 };
 
@@ -46,6 +55,9 @@ export const deleteHero = async (heroId) => {
     return data;
   } catch (error) {
     console.log(error.message);
-    return null;
+    return {
+      data: null,
+      error: error.response.data,
+    };
   }
 };

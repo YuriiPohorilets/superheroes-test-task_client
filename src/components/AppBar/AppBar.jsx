@@ -10,6 +10,7 @@ export const AppBar = () => {
       <Container>
         <Box sx={wrapper}>
           <NavBar />
+
           <CreateHero />
         </Box>
       </Container>

@@ -1,6 +1,7 @@
 export const header = {
-  bgcolor: "primary.darker",
   py: "14px",
+
+  bgcolor: "primary.darker",
 };
 
 export const wrapper = {

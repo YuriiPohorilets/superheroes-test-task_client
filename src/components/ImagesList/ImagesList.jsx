@@ -6,52 +6,23 @@ import {
   IconButton,
 } from "@mui/material";
 import { Delete } from "@mui/icons-material/";
+import { container, list, item, iconWrapper, icon } from "./imagesListStyles";
 
 export const ImageList = ({ images, isEdit, onClick }) => {
   return (
-    <Box
-      sx={{
-        height: "500px",
-        overflowY: "scroll",
-        maxWidth: "700px",
-        borderRadius: "16px",
-      }}
-    >
-      <MuiImageList
-        variant="masonry"
-        cols={3}
-        gap={8}
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: { xs: "center", md: "flex-start" },
-        }}
-      >
+    <Box sx={container}>
+      <MuiImageList variant="masonry" cols={3} gap={8} sx={list}>
         {images.map((image) => (
           <ImageListItem
             key={image}
             onClick={() => {
               onClick(image);
             }}
-            sx={{
-              position: "relative",
-              flexBasis: "calc((100% - 16px) / 3)",
-              borderRadius: "16px",
-              overflow: "hidden",
-              maxHeight: "300px",
-              cursor: "pointer",
-            }}
+            sx={item}
           >
             {isEdit && (
-              <IconButton
-                aria-label="delete"
-                sx={{ position: "absolute", top: "8px", right: "8px" }}
-              >
-                <Delete
-                  sx={{
-                    color: "primary.light",
-                  }}
-                />
+              <IconButton aria-label="delete" sx={iconWrapper}>
+                <Delete sx={icon} />
               </IconButton>
             )}
 

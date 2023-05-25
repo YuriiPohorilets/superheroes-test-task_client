@@ -20,6 +20,7 @@ export const Dropzone = ({ setFieldValue }) => {
 
     onDrop: (acceptedFiles) => {
       setFieldValue("images", acceptedFiles);
+
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {

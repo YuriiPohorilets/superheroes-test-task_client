@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Box, Button } from "@mui/material";
 import { getHeroeDetails, deleteHero } from "services/heroesApi";
 import { GoBackButton } from "components/GoBackButton/GoBackButton";
@@ -16,6 +16,7 @@ export const HeroDetails = () => {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { heroId } = useParams();
+  const navigate = useNavigate();
 
   const handleClickOpenDialog = () => {
     setIsOpenDialog(!isOpenDialog);
@@ -32,6 +33,7 @@ export const HeroDetails = () => {
 
     setIsOpenDialog(!isOpenDialog);
     setIsLoading(false);
+    navigate("/heroes");
   };
 
   useEffect(() => {

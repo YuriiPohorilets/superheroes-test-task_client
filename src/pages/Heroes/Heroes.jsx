@@ -5,9 +5,10 @@ import { Loader } from "components/Loader/Loader";
 import { ErrorMsg } from "components/ErrorMsg/ErrorMsg";
 import { scrollToTop } from "helpers/scrollToTop";
 import { getHeroes } from "services/heroesApi";
+import { useHeroes } from "hooks/heroesContext";
 
 export const Heroes = () => {
-  const [heroes, setHeroes] = useState([]);
+  const { heroes, setHeroes } = useHeroes();
   const [page, setPage] = useState(1);
   const [totalHits, setTotalHits] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +41,7 @@ export const Heroes = () => {
     };
 
     fetchHeroes();
-  }, [page]);
+  }, [page, setHeroes]);
 
   return (
     <>
