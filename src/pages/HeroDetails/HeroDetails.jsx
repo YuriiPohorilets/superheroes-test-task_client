@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { getHeroeDetails, deleteHero } from "services/heroesApi";
 import { GoBackButton } from "components/GoBackButton/GoBackButton";
 import { HeroCard } from "components/HeroCard/HeroCard";
 import { Loader } from "components/Loader/Loader";
 import { ErrorMsg } from "components/ErrorMsg/ErrorMsg";
 import { AlertDialog } from "components/AlertDialog/AlertDialog";
-import { outlinedBtn } from "shared/commonStyles";
 
 export const HeroDetails = () => {
   const [heroDetails, setHeroDetails] = useState(null);
@@ -62,32 +61,6 @@ export const HeroDetails = () => {
         sx={{ display: "flex", justifyContent: "space-between", gap: "24px" }}
       >
         <GoBackButton />
-
-        <Box>
-          <Button
-            onClick={handleClickOpenDialog}
-            variant="outlined"
-            sx={outlinedBtn}
-          >
-            Delete
-          </Button>
-
-          <Button
-            onClick={handleEdit}
-            variant="outlined"
-            sx={{
-              ...outlinedBtn,
-              "&:hover": {
-                bgcolor: "neutral.darker",
-                borderColor: "primary.darker",
-                boxShadow: 3,
-              },
-              ml: "8px",
-            }}
-          >
-            Edit
-          </Button>
-        </Box>
       </Box>
 
       <AlertDialog
@@ -103,7 +76,13 @@ export const HeroDetails = () => {
       {isLoading && <Loader />}
 
       {!isLoading && !isError && heroDetails && (
-        <HeroCard hero={heroDetails} isEdit={isEditing} />
+        <HeroCard
+          hero={heroDetails}
+          isEditing={isEditing}
+          heroId={heroId}
+          handleEdit={handleEdit}
+          handleClickOpenDialog={handleClickOpenDialog}
+        />
       )}
     </>
   );

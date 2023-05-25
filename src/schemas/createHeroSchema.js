@@ -16,11 +16,11 @@ export const createHeroSchema = Yup.object().shape({
     .max(240, "Description should be of maximum 240 characters length")
     .required("Description is required"),
 
-  superpowers: Yup.string("Enter hero superpowers")
-    .min(2, "Superpowers should be of minimum 2 characters length")
-    .required("Superpowers is required"),
+  // superpowers: Yup.string("Enter hero superpowers")
+  //   .min(2, "Superpowers should be of minimum 2 characters length")
+  //   .required("Superpowers is required"),
 
-  catchPhrase: Yup.string("Enter hero catch phrase")
-    .min(2, "Catch phrase should be of minimum 2 characters length")
-    .required("Catch phrase is required"),
+  // catchPhrase: Yup.string("Enter hero catch phrase")
+  //   .min(2, "Catch phrase should be of minimum 2 characters length")
+  //   .required("Catch phrase is required"),
 });

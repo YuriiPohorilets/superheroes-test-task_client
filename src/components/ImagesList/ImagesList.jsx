@@ -8,7 +8,7 @@ import {
 import { Delete } from "@mui/icons-material/";
 import { container, list, item, iconWrapper, icon } from "./imagesListStyles";
 
-export const ImageList = ({ images, isEdit, onClick }) => {
+export const ImageList = ({ images, isEditing, onClick }) => {
   return (
     <Box sx={container}>
       <MuiImageList variant="masonry" cols={3} gap={8} sx={list}>
@@ -20,7 +20,7 @@ export const ImageList = ({ images, isEdit, onClick }) => {
             }}
             sx={item}
           >
-            {isEdit && (
+            {isEditing && (
               <IconButton aria-label="delete" sx={iconWrapper}>
                 <Delete sx={icon} />
               </IconButton>

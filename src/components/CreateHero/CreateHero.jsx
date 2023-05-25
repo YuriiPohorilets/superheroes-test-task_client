@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 import {
   Button,
   TextField,
@@ -21,6 +20,7 @@ import { createHero } from "services/heroesApi";
 import { useHeroes } from "hooks/heroesContext";
 import { outlinedBtn, containedBtn } from "shared/commonStyles";
 import { title, formWrapper, input } from "./createHeroStyles";
+import "react-toastify/dist/ReactToastify.css";
 
 const initialValues = {
   nickname: "",

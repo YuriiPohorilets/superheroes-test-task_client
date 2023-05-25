@@ -61,3 +61,21 @@ export const deleteHero = async (heroId) => {
     };
   }
 };
+
+export const updateHero = async (heroId, hero) => {
+  try {
+    const { data } = await axios.patch(`/heroes/${heroId}`, hero, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.log(error.message);
+    return {
+      data: null,
+      error: error.response.data,
+    };
+  }
+};

@@ -1,7 +1,13 @@
-import { useState } from "react";
-import { Box, Typography, Divider } from "@mui/material";
-import { ImageList } from "components/ImagesList/ImagesList";
-import NoImg from "img/noImg.jpg";
+import { useState } from 'react';
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { Box, Typography, Button, Divider, TextField } from '@mui/material';
+import { toast, ToastContainer } from 'react-toastify';
+import { ImageList } from 'components/ImagesList/ImagesList';
+import { HeroTools } from 'components/HeroTools/HeroTools';
+import { updateHero } from 'services/heroesApi';
+import { createHeroSchema } from 'schemas/createHeroSchema';
+import NoImg from 'img/noImg.jpg';
 import {
   title,
   container,
@@ -11,33 +17,79 @@ import {
   contentContainer,
   subtitle,
   text,
-} from "./heroCardStyles";
+} from './heroCardStyles';
+import { outlinedBtn } from 'shared/commonStyles';
+import 'react-toastify/dist/ReactToastify.css';
 
-export const HeroCard = ({ hero, isEdit }) => {
-  const {
-    nickname,
-    realName,
-    images,
-    originDescription,
-    superpowers,
-    catchPhrase,
-  } = hero;
+export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenDialog }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [prevImg, setPrevImg] = useState(hero.images[0]);
+  const navigate = useNavigate();
 
-  const [prevImg, setPrevImg] = useState(images[0]);
+  const { handleSubmit, handleChange, resetForm, setFieldValue, values, touched, errors } =
+    useFormik({
+      initialValues: hero,
+      validationSchema: createHeroSchema,
 
-  const handleClickImg = (imgUrl) => setPrevImg(imgUrl);
+      onSubmit: async newHero => {
+        const { nickname, realName, originDescription, superpowers, catchPhrase, images } = newHero;
+
+        setIsLoading(true);
+
+        const updatedHero = await updateHero(heroId, {
+          nickname,
+          realName,
+          originDescription,
+          superpowers,
+          catchPhrase,
+          images,
+        });
+        console.log(updatedHero);
+        if (updatedHero.error) {
+          toast(updatedHero.error.message, {
+            autoClose: 2000,
+            theme: 'colored',
+          });
+          setIsLoading(false);
+          return;
+        }
+
+        // setHeroes((prevHeroes) => [updatedHero, ...prevHeroes]);
+        setIsLoading(false);
+        // navigate("/heroes");
+        // resetForm();
+      },
+    });
+
+  const handleClickImg = imgUrl => setPrevImg(imgUrl);
+
+  const handleDeleteImg = () => {};
 
   return (
     <>
-      <Typography sx={title}>Hero details</Typography>
+      <Box component="form" sx={container} onSubmit={handleSubmit}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <Typography sx={title}>Hero details</Typography>
 
-      <Box sx={container}>
+          <HeroTools
+            handleClickOpenDialog={handleClickOpenDialog}
+            handleEdit={handleEdit}
+            isEditing={isEditing}
+          />
+        </Box>
+
         <Box sx={mediaWrapper}>
           <Box sx={imgWrapper}>
             <Box
               component="img"
               src={prevImg ? prevImg : NoImg}
-              alt={nickname}
+              alt={hero.nickname}
               width={365}
               height={500}
               loading="lazy"
@@ -45,60 +97,139 @@ export const HeroCard = ({ hero, isEdit }) => {
             />
           </Box>
 
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{ bgcolor: "neutral.light" }}
-          />
+          <Divider orientation="vertical" flexItem sx={{ bgcolor: 'neutral.light' }} />
 
-          <ImageList images={images} isEdit={isEdit} onClick={handleClickImg} />
+          <ImageList images={hero.images} isEditing={isEditing} onClick={handleClickImg} />
         </Box>
 
         <Box sx={contentContainer}>
-          <Typography sx={subtitle}>
-            Nickname:{" "}
-            <Typography component="span" sx={text}>
-              {nickname}
-            </Typography>
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '54px',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography sx={subtitle}>Nickname: </Typography>
 
-          <Typography sx={subtitle}>
-            Real name:{" "}
-            <Typography component="span" sx={text}>
-              {realName}
-            </Typography>
-          </Typography>
+            <TextField
+              variant="standard"
+              disabled={!isEditing}
+              autoComplete="false"
+              id="nickname"
+              type="text"
+              value={values.nickname}
+              color="secondary"
+              onChange={handleChange}
+              error={touched.nickname && !!errors.nickname}
+              helperText={touched.nickname && errors.nickname}
+              sx={{ width: '100%' }}
+            />
+          </Box>
 
-          <Typography sx={subtitle}>
-            Description:{" "}
-            <Typography component="span" sx={text}>
-              {originDescription}
-            </Typography>
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '54px',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography sx={subtitle}>Real name: </Typography>
+            <TextField
+              variant="standard"
+              disabled={!isEditing}
+              autoComplete="false"
+              id="realName"
+              type="text"
+              value={values.realName}
+              color="secondary"
+              onChange={handleChange}
+              error={touched.realName && !!errors.realName}
+              helperText={touched.realName && errors.realName}
+              sx={{ width: '100%' }}
+            />
+          </Box>
 
-          <Typography sx={subtitle}>
-            Superpowers:{" "}
-            {superpowers.map((power) => (
-              <Typography key={power} component="span" sx={text}>
-                {power},{" "}
-              </Typography>
-            ))}
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '54px',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography sx={subtitle}>Description: </Typography>
+            <TextField
+              variant="standard"
+              multiline
+              disabled={!isEditing}
+              autoComplete="false"
+              id="originDescription"
+              type="text"
+              value={values.originDescription}
+              color="secondary"
+              onChange={handleChange}
+              error={touched.originDescription && !!errors.originDescription}
+              helperText={touched.originDescription && errors.originDescription}
+              sx={{ width: '100%' }}
+            />
+          </Box>
 
-          <Typography sx={subtitle}>
-            Catch phrases:{" "}
-            {catchPhrase.map((phrase) => (
-              <Typography
-                key={phrase}
-                component="span"
-                sx={{ ...text, fontStyle: "italic" }}
-              >
-                "{phrase}",{" "}
-              </Typography>
-            ))}
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '54px',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography sx={subtitle}>Superpowers: </Typography>
+            <TextField
+              variant="standard"
+              multiline
+              disabled={!isEditing}
+              autoComplete="false"
+              id="superpowers"
+              type="text"
+              value={values.superpowers}
+              color="secondary"
+              onChange={handleChange}
+              error={touched.superpowers && !!errors.superpowers}
+              helperText={touched.superpowers && errors.superpowers}
+              sx={{ width: '100%' }}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '54px',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography sx={subtitle}>Catch phrase: </Typography>
+            <TextField
+              variant="standard"
+              multiline
+              disabled={!isEditing}
+              autoComplete="false"
+              id="catchPhrase"
+              type="text"
+              value={values.catchPhrase}
+              color="secondary"
+              onChange={handleChange}
+              error={touched.catchPhrase && !!errors.catchPhrase}
+              helperText={touched.catchPhrase && errors.catchPhrase}
+              sx={{ width: '100%' }}
+            />
+          </Box>
         </Box>
       </Box>
+
+      <ToastContainer />
     </>
   );
 };
