@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
-axios.defaults.baseURL = "http://localhost:3001/api/";
+axios.defaults.baseURL = 'http://localhost:3001/api/';
 
-export const getHeroes = async (page) => {
+export const getHeroes = async page => {
   try {
     const { data } = await axios.get(`/heroes?page=${page}`);
 
@@ -16,7 +16,7 @@ export const getHeroes = async (page) => {
   }
 };
 
-export const getHeroeDetails = async (heroId) => {
+export const getHeroeDetails = async heroId => {
   try {
     const { data } = await axios.get(`/heroes/${heroId}`);
 
@@ -30,11 +30,11 @@ export const getHeroeDetails = async (heroId) => {
   }
 };
 
-export const createHero = async (hero) => {
+export const createHero = async hero => {
   try {
-    const { data } = await axios.post("/heroes", hero, {
+    const { data } = await axios.post('/heroes', hero, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     });
 
@@ -48,7 +48,7 @@ export const createHero = async (hero) => {
   }
 };
 
-export const deleteHero = async (heroId) => {
+export const deleteHero = async heroId => {
   try {
     const { data } = await axios.delete(`/heroes/${heroId}`);
 
@@ -66,7 +66,7 @@ export const updateHero = async (heroId, hero) => {
   try {
     const { data } = await axios.patch(`/heroes/${heroId}`, hero, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     });
 

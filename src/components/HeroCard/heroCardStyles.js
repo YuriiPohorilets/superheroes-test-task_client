@@ -59,3 +59,18 @@ export const text = {
   fontWeight: 300,
   textTransform: 'none',
 };
+
+export const input = {
+  '& .MuiInput-underline:before': { borderBottomColor: 'neutral.light' },
+  '& .MuiInput-underline': { color: '#fff', fontSize: '20px' },
+  '& .MuiInputBase-input.Mui-disabled': { WebkitTextFillColor: '#fff', fontSize: '20px' },
+
+  width: '100%',
+};
+
+export const textFieldWrapper = {
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: '54px',
+  justifyContent: 'space-between',
+};

@@ -1,53 +1,53 @@
 export const inputWrapper = {
-  p: "36px",
+  p: '36px',
 
-  textAlign: "center",
+  textAlign: 'center',
 
-  bgcolor: "neutral.main",
-  border: "1px dashed",
-  borderColor: "primary.main",
-  borderRadius: "8px",
+  bgcolor: 'neutral.main',
+  border: '1px dashed',
+  borderColor: 'primary.main',
+  borderRadius: '8px',
 
-  cursor: "pointer",
+  cursor: 'pointer',
 };
 
 export const thumbsContainer = {
-  mt: "16px",
+  mt: '16px',
 
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  gap: "8px",
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  gap: '8px',
 };
 
 export const thumb = {
-  width: "100px",
-  height: "100px",
+  width: '100px',
+  height: '100px',
 
-  border: "1px solid",
-  borderColor: "primary.darker",
-  borderRadius: "8px",
+  border: '1px solid',
+  borderColor: 'primary.darker',
+  borderRadius: '8px',
 
-  overflow: "hidden",
+  overflow: 'hidden',
 };
 
 export const thumbInner = {
   minWidth: 0,
 
-  display: "flex",
+  display: 'flex',
 
-  borderRadius: "8px",
+  borderRadius: '8px',
 
-  overflow: "hidden",
+  overflow: 'hidden',
 };
 
 export const img = {
-  width: "100px",
-  height: "100px",
+  width: '100px',
+  height: '100px',
 
-  objectFit: "cover",
+  objectFit: 'cover',
 };
 
 export const text = {
-  color: "primary.darker",
+  color: 'primary.darker',
 };

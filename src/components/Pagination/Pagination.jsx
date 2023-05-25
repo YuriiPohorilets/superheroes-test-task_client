@@ -1,5 +1,5 @@
-import { Pagination as MuiPagination, PaginationItem } from "@mui/material";
-import { pagination, pagintaionItems } from "./paginationStyles";
+import { Pagination as MuiPagination, PaginationItem } from '@mui/material';
+import { pagination, pagintaionItems } from './paginationStyles';
 
 export const Pagination = ({ onChange, page, count }) => {
   return (
@@ -12,7 +12,7 @@ export const Pagination = ({ onChange, page, count }) => {
       color="secondary"
       onChange={onChange}
       sx={pagination}
-      renderItem={(item) => <PaginationItem sx={pagintaionItems} {...item} />}
+      renderItem={item => <PaginationItem sx={pagintaionItems} {...item} />}
     />
   );
 };

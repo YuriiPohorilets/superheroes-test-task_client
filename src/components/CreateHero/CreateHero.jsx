@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { useState } from 'react';
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import {
   Button,
   TextField,
@@ -11,23 +11,23 @@ import {
   DialogContent,
   DialogTitle,
   useMediaQuery,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { createHeroSchema } from "schemas/createHeroSchema";
-import { Dropzone } from "components/Dropzone/Dropzone";
-import { Loader } from "components/Loader/Loader";
-import { createHero } from "services/heroesApi";
-import { useHeroes } from "hooks/heroesContext";
-import { outlinedBtn, containedBtn } from "shared/commonStyles";
-import { title, formWrapper, input } from "./createHeroStyles";
-import "react-toastify/dist/ReactToastify.css";
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { createHeroSchema } from 'schemas/createHeroSchema';
+import { Dropzone } from 'components/Dropzone/Dropzone';
+import { Loader } from 'components/Loader/Loader';
+import { createHero } from 'services/heroesApi';
+import { useHeroes } from 'hooks/heroesContext';
+import { outlinedBtn, containedBtn } from 'shared/commonStyles';
+import { title, formWrapper, input } from './createHeroStyles';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialValues = {
-  nickname: "",
-  realName: "",
-  originDescription: "",
-  superpowers: "",
-  catchPhrase: "",
+  nickname: '',
+  realName: '',
+  originDescription: '',
+  superpowers: '',
+  catchPhrase: '',
   images: null,
 };
 
@@ -36,58 +36,44 @@ export const CreateHero = () => {
   const [isOpen, setisOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { breakpoints } = useTheme();
-  const fullScreen = useMediaQuery(breakpoints.down("md"));
+  const fullScreen = useMediaQuery(breakpoints.down('md'));
   const navigate = useNavigate();
 
-  const {
-    handleSubmit,
-    handleChange,
-    resetForm,
-    setFieldValue,
-    values,
-    touched,
-    errors,
-  } = useFormik({
-    initialValues,
-    validationSchema: createHeroSchema,
+  const { handleSubmit, handleChange, resetForm, setFieldValue, values, touched, errors } =
+    useFormik({
+      initialValues,
+      validationSchema: createHeroSchema,
 
-    onSubmit: async (newHero) => {
-      const {
-        nickname,
-        realName,
-        originDescription,
-        superpowers,
-        catchPhrase,
-        images,
-      } = newHero;
+      onSubmit: async newHero => {
+        const { nickname, realName, originDescription, superpowers, catchPhrase, images } = newHero;
 
-      setIsLoading(true);
+        setIsLoading(true);
 
-      const createdHero = await createHero({
-        nickname,
-        realName,
-        originDescription,
-        superpowers: superpowers.split(","),
-        catchPhrase: catchPhrase.split(","),
-        images,
-      });
-
-      if (createdHero.error) {
-        toast(createdHero.error.message, {
-          autoClose: 2000,
-          theme: "colored",
+        const createdHero = await createHero({
+          nickname,
+          realName,
+          originDescription,
+          superpowers: superpowers.split(','),
+          catchPhrase: catchPhrase.split(','),
+          images,
         });
-        setIsLoading(false);
-        return;
-      }
 
-      setHeroes((prevHeroes) => [createdHero, ...prevHeroes]);
-      setIsLoading(false);
-      handleClose();
-      navigate("/heroes");
-      resetForm();
-    },
-  });
+        if (createdHero.error) {
+          toast(createdHero.error.message, {
+            autoClose: 2000,
+            theme: 'colored',
+          });
+          setIsLoading(false);
+          return;
+        }
+
+        setHeroes(prevHeroes => [createdHero, ...prevHeroes]);
+        setIsLoading(false);
+        handleClose();
+        navigate('/heroes');
+        resetForm();
+      },
+    });
 
   const handleClickOpen = () => {
     setisOpen(true);
@@ -99,12 +85,7 @@ export const CreateHero = () => {
 
   return (
     <>
-      <Button
-        type="button"
-        variant="outlined"
-        onClick={handleClickOpen}
-        sx={outlinedBtn}
-      >
+      <Button type="button" variant="outlined" onClick={handleClickOpen} sx={outlinedBtn}>
         Create hero
       </Button>
 
@@ -154,14 +135,11 @@ export const CreateHero = () => {
                 type="text"
                 label="Description"
                 multiline
-                rows={3}
                 value={values.originDescription}
                 onChange={handleChange}
                 error={touched.originDescription && !!errors.originDescription}
-                helperText={
-                  touched.originDescription && errors.originDescription
-                }
-                sx={{ ...input, width: "100%" }}
+                helperText={touched.originDescription && errors.originDescription}
+                sx={{ ...input, width: '100%' }}
               />
 
               <TextField
@@ -189,7 +167,7 @@ export const CreateHero = () => {
               />
             </Box>
 
-            <Box sx={{ mb: "24px" }}>
+            <Box sx={{ mb: '24px' }}>
               <Dropzone setFieldValue={setFieldValue} />
             </Box>
 
@@ -201,8 +179,8 @@ export const CreateHero = () => {
                 onClick={handleClose}
                 sx={{
                   ...outlinedBtn,
-                  color: "primary.accent",
-                  borderColor: "primary.accent",
+                  color: 'primary.accent',
+                  borderColor: 'primary.accent',
                 }}
               >
                 Cancel

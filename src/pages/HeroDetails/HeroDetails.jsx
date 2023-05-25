@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Box } from "@mui/material";
-import { getHeroeDetails, deleteHero } from "services/heroesApi";
-import { GoBackButton } from "components/GoBackButton/GoBackButton";
-import { HeroCard } from "components/HeroCard/HeroCard";
-import { Loader } from "components/Loader/Loader";
-import { ErrorMsg } from "components/ErrorMsg/ErrorMsg";
-import { AlertDialog } from "components/AlertDialog/AlertDialog";
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { getHeroeDetails, deleteHero } from 'services/heroesApi';
+import { GoBackButton } from 'components/GoBackButton/GoBackButton';
+import { HeroCard } from 'components/HeroCard/HeroCard';
+import { Loader } from 'components/Loader/Loader';
+import { ErrorMsg } from 'components/ErrorMsg/ErrorMsg';
+import { AlertDialog } from 'components/AlertDialog/AlertDialog';
 
 export const HeroDetails = () => {
   const [heroDetails, setHeroDetails] = useState(null);
@@ -25,14 +25,14 @@ export const HeroDetails = () => {
     setIsEditing(!isEditing);
   };
 
-  const handleDelete = async (heroId) => {
+  const handleDelete = async heroId => {
     setIsLoading(true);
 
     await deleteHero(heroId);
 
     setIsOpenDialog(!isOpenDialog);
     setIsLoading(false);
-    navigate("/heroes");
+    navigate('/heroes');
   };
 
   useEffect(() => {
@@ -57,9 +57,7 @@ export const HeroDetails = () => {
 
   return (
     <>
-      <Box
-        sx={{ display: "flex", justifyContent: "space-between", gap: "24px" }}
-      >
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '24px' }}>
         <GoBackButton />
       </Box>
 

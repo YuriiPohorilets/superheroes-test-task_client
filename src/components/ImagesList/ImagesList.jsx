@@ -1,18 +1,12 @@
-import * as React from "react";
-import {
-  Box,
-  ImageList as MuiImageList,
-  ImageListItem,
-  IconButton,
-} from "@mui/material";
-import { Delete } from "@mui/icons-material/";
-import { container, list, item, iconWrapper, icon } from "./imagesListStyles";
+import { Box, ImageList as MuiImageList, ImageListItem, IconButton } from '@mui/material';
+import { Delete } from '@mui/icons-material/';
+import { container, list, item, iconWrapper, icon } from './imagesListStyles';
 
-export const ImageList = ({ images, isEditing, onClick }) => {
+export const ImageList = ({ images, isEditing, onClick, deleteImg }) => {
   return (
     <Box sx={container}>
       <MuiImageList variant="masonry" cols={3} gap={8} sx={list}>
-        {images.map((image) => (
+        {images.map(image => (
           <ImageListItem
             key={image}
             onClick={() => {
@@ -21,7 +15,7 @@ export const ImageList = ({ images, isEditing, onClick }) => {
             sx={item}
           >
             {isEditing && (
-              <IconButton aria-label="delete" sx={iconWrapper}>
+              <IconButton aria-label="delete" sx={iconWrapper} onClick={() => deleteImg(image)}>
                 <Delete sx={icon} />
               </IconButton>
             )}

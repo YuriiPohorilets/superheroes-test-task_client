@@ -1,32 +1,29 @@
-import { Box, Button } from "@mui/material";
-import { outlinedBtn } from "shared/commonStyles";
+import { Box, Button } from '@mui/material';
+import { outlinedBtn } from 'shared/commonStyles';
 
-export const HeroTools = ({ handleClickOpenDialog, isEditing, handleEdit }) => {
+export const HeroTools = ({ handleClickOpenDialog, isEditing, handleEdit, openModal }) => {
   return (
-    <Box sx={{ display: "flex", gap: "8px", mb: "24px" }}>
+    <Box sx={{ display: 'flex', gap: '8px', mb: '24px' }}>
       {isEditing ? (
         <>
-          <Box sx={{ ml: "24px" }}>
+          <Box sx={{ ml: '24px' }}>
             <Button
+              onClick={openModal}
               variant="outlined"
               sx={{
                 ...outlinedBtn,
-                "&:hover": {
-                  bgcolor: "neutral.darker",
-                  borderColor: "primary.darker",
+                '&:hover': {
+                  bgcolor: 'neutral.darker',
+                  borderColor: 'primary.darker',
                   boxShadow: 3,
                 },
-                mr: "8px",
+                mr: '8px',
               }}
             >
               Add image
             </Button>
 
-            <Button
-              onClick={handleClickOpenDialog}
-              variant="outlined"
-              sx={outlinedBtn}
-            >
+            <Button onClick={handleClickOpenDialog} variant="outlined" sx={outlinedBtn}>
               Delete hero
             </Button>
           </Box>
@@ -36,9 +33,9 @@ export const HeroTools = ({ handleClickOpenDialog, isEditing, handleEdit }) => {
             variant="outlined"
             sx={{
               ...outlinedBtn,
-              "&:hover": {
-                bgcolor: "neutral.darker",
-                borderColor: "primary.darker",
+              '&:hover': {
+                bgcolor: 'neutral.darker',
+                borderColor: 'primary.darker',
                 boxShadow: 3,
               },
             }}
@@ -56,9 +53,9 @@ export const HeroTools = ({ handleClickOpenDialog, isEditing, handleEdit }) => {
           variant="outlined"
           sx={{
             ...outlinedBtn,
-            "&:hover": {
-              bgcolor: "neutral.darker",
-              borderColor: "primary.darker",
+            '&:hover': {
+              bgcolor: 'neutral.darker',
+              borderColor: 'primary.darker',
               boxShadow: 3,
             },
           }}

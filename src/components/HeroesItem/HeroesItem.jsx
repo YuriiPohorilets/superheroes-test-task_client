@@ -1,21 +1,7 @@
-import { useLocation, Link } from "react-router-dom";
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  CardActionArea,
-  Typography,
-  ListItem,
-} from "@mui/material";
-import NoImg from "img/noImg.jpg";
-import {
-  listItem,
-  card,
-  cardAction,
-  cardMedia,
-  cardContent,
-  cardName,
-} from "./heroesItemStyles";
+import { useLocation, Link } from 'react-router-dom';
+import { Card, CardContent, CardMedia, CardActionArea, Typography, ListItem } from '@mui/material';
+import NoImg from 'img/noImg.jpg';
+import { listItem, card, cardAction, cardMedia, cardContent, cardName } from './heroesItemStyles';
 
 export const HeroesItem = ({ id, nickname, images }) => {
   const location = useLocation();

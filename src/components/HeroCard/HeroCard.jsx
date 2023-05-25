@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Button, Divider, TextField } from '@mui/material';
+import { Box, Typography, Divider, TextField, Modal, Button } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 import { ImageList } from 'components/ImagesList/ImagesList';
 import { HeroTools } from 'components/HeroTools/HeroTools';
+import { Dropzone } from 'components/Dropzone/Dropzone';
+import { Loader } from 'components/Loader/Loader';
 import { updateHero } from 'services/heroesApi';
 import { createHeroSchema } from 'schemas/createHeroSchema';
 import NoImg from 'img/noImg.jpg';
@@ -16,73 +17,98 @@ import {
   previewImg,
   contentContainer,
   subtitle,
-  text,
+  input,
+  textFieldWrapper,
 } from './heroCardStyles';
-import { outlinedBtn } from 'shared/commonStyles';
 import 'react-toastify/dist/ReactToastify.css';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  color: 'red',
+};
 
 export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenDialog }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [prevImg, setPrevImg] = useState(hero.images[0]);
-  const navigate = useNavigate();
+  const [heroImages, setHeroImages] = useState(hero.images);
+  const [prevImg, setPrevImg] = useState(heroImages[0]);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const { handleSubmit, handleChange, resetForm, setFieldValue, values, touched, errors } =
-    useFormik({
-      initialValues: hero,
-      validationSchema: createHeroSchema,
+  const { handleSubmit, handleChange, setFieldValue, values, touched, errors } = useFormik({
+    initialValues: hero,
+    validationSchema: createHeroSchema,
 
-      onSubmit: async newHero => {
-        const { nickname, realName, originDescription, superpowers, catchPhrase, images } = newHero;
+    onSubmit: async newHero => {
+      const { nickname, realName, originDescription, superpowers, catchPhrase } = newHero;
 
-        setIsLoading(true);
+      setIsLoading(true);
 
-        const updatedHero = await updateHero(heroId, {
-          nickname,
-          realName,
-          originDescription,
-          superpowers,
-          catchPhrase,
-          images,
+      const updatedHero = await updateHero(heroId, {
+        nickname,
+        realName,
+        originDescription,
+        superpowers,
+        catchPhrase,
+        images: heroImages,
+      });
+
+      if (updatedHero.error) {
+        toast(updatedHero.error.message, {
+          autoClose: 2000,
+          theme: 'colored',
         });
-        console.log(updatedHero);
-        if (updatedHero.error) {
-          toast(updatedHero.error.message, {
-            autoClose: 2000,
-            theme: 'colored',
-          });
-          setIsLoading(false);
-          return;
-        }
-
-        // setHeroes((prevHeroes) => [updatedHero, ...prevHeroes]);
         setIsLoading(false);
-        // navigate("/heroes");
-        // resetForm();
-      },
-    });
+        return;
+      }
+
+      setIsLoading(false);
+      handleEdit(false);
+    },
+  });
+  const handleOpen = () => {
+    setIsOpenModal(true);
+  };
+  const handleClose = () => setIsOpenModal(false);
 
   const handleClickImg = imgUrl => setPrevImg(imgUrl);
 
-  const handleDeleteImg = () => {};
+  const handleDeleteImg = imgUrl => {
+    setHeroImages(prevImg => prevImg.filter(image => image !== imgUrl));
+  };
 
   return (
     <>
       <Box component="form" sx={container} onSubmit={handleSubmit}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-          }}
-        >
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <Typography sx={title}>Hero details</Typography>
 
           <HeroTools
             handleClickOpenDialog={handleClickOpenDialog}
             handleEdit={handleEdit}
             isEditing={isEditing}
+            openModal={handleOpen}
           />
         </Box>
+
+        <Modal
+          open={isOpenModal}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Dropzone setFieldValue={setFieldValue} />
+            <Button type="submit">Add</Button>
+          </Box>
+        </Modal>
+
+        {isLoading && <Loader />}
 
         <Box sx={mediaWrapper}>
           <Box sx={imgWrapper}>
@@ -99,18 +125,16 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
 
           <Divider orientation="vertical" flexItem sx={{ bgcolor: 'neutral.light' }} />
 
-          <ImageList images={hero.images} isEditing={isEditing} onClick={handleClickImg} />
+          <ImageList
+            images={heroImages}
+            isEditing={isEditing}
+            onClick={handleClickImg}
+            deleteImg={handleDeleteImg}
+          />
         </Box>
 
         <Box sx={contentContainer}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '54px',
-              justifyContent: 'space-between',
-            }}
-          >
+          <Box sx={textFieldWrapper}>
             <Typography sx={subtitle}>Nickname: </Typography>
 
             <TextField
@@ -124,18 +148,11 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.nickname && !!errors.nickname}
               helperText={touched.nickname && errors.nickname}
-              sx={{ width: '100%' }}
+              sx={input}
             />
           </Box>
 
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '54px',
-              justifyContent: 'space-between',
-            }}
-          >
+          <Box sx={textFieldWrapper}>
             <Typography sx={subtitle}>Real name: </Typography>
             <TextField
               variant="standard"
@@ -148,22 +165,16 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.realName && !!errors.realName}
               helperText={touched.realName && errors.realName}
-              sx={{ width: '100%' }}
+              sx={input}
             />
           </Box>
 
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '54px',
-              justifyContent: 'space-between',
-            }}
-          >
+          <Box sx={textFieldWrapper}>
             <Typography sx={subtitle}>Description: </Typography>
             <TextField
               variant="standard"
               multiline
+              style={{ color: 'red' }}
               disabled={!isEditing}
               autoComplete="false"
               id="originDescription"
@@ -173,18 +184,11 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.originDescription && !!errors.originDescription}
               helperText={touched.originDescription && errors.originDescription}
-              sx={{ width: '100%' }}
+              sx={input}
             />
           </Box>
 
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '54px',
-              justifyContent: 'space-between',
-            }}
-          >
+          <Box sx={textFieldWrapper}>
             <Typography sx={subtitle}>Superpowers: </Typography>
             <TextField
               variant="standard"
@@ -198,18 +202,11 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.superpowers && !!errors.superpowers}
               helperText={touched.superpowers && errors.superpowers}
-              sx={{ width: '100%' }}
+              sx={input}
             />
           </Box>
 
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '54px',
-              justifyContent: 'space-between',
-            }}
-          >
+          <Box sx={textFieldWrapper}>
             <Typography sx={subtitle}>Catch phrase: </Typography>
             <TextField
               variant="standard"
@@ -223,7 +220,7 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
               onChange={handleChange}
               error={touched.catchPhrase && !!errors.catchPhrase}
               helperText={touched.catchPhrase && errors.catchPhrase}
-              sx={{ width: '100%' }}
+              sx={input}
             />
           </Box>
         </Box>

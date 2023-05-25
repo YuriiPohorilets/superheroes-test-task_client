@@ -1,13 +1,7 @@
-import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
-import { outlinedBtn, containedBtn } from "shared/commonStyles";
+import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
+import { outlinedBtn, containedBtn } from 'shared/commonStyles';
 
-export const AlertDialog = ({
-  children,
-  isOpen,
-  onClick,
-  heroId,
-  handleClose,
-}) => {
+export const AlertDialog = ({ children, isOpen, onClick, heroId, handleClose }) => {
   return (
     <Dialog
       open={isOpen}
@@ -15,7 +9,7 @@ export const AlertDialog = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title" sx={{ fontSize: "24px" }}>
+      <DialogTitle id="alert-dialog-title" sx={{ fontSize: '24px' }}>
         {children}
       </DialogTitle>
 
@@ -23,7 +17,7 @@ export const AlertDialog = ({
         <Button
           variant="contained"
           onClick={handleClose}
-          sx={{ ...containedBtn, boxShadow: "none" }}
+          sx={{ ...containedBtn, boxShadow: 'none' }}
         >
           Cancel
         </Button>
@@ -34,9 +28,9 @@ export const AlertDialog = ({
           autoFocus
           sx={{
             ...outlinedBtn,
-            ml: "8px",
-            color: "primary.accent",
-            borderColor: "primary.accent",
+            ml: '8px',
+            color: 'primary.accent',
+            borderColor: 'primary.accent',
           }}
         >
           Delete

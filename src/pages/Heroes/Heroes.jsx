@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { HeroesList } from "components/HeroesList/HeroesList";
-import { Pagination } from "components/Pagination/Pagination";
-import { Loader } from "components/Loader/Loader";
-import { ErrorMsg } from "components/ErrorMsg/ErrorMsg";
-import { scrollToTop } from "helpers/scrollToTop";
-import { getHeroes } from "services/heroesApi";
-import { useHeroes } from "hooks/heroesContext";
+import { useEffect, useState } from 'react';
+import { HeroesList } from 'components/HeroesList/HeroesList';
+import { Pagination } from 'components/Pagination/Pagination';
+import { Loader } from 'components/Loader/Loader';
+import { ErrorMsg } from 'components/ErrorMsg/ErrorMsg';
+import { scrollToTop } from 'helpers/scrollToTop';
+import { getHeroes } from 'services/heroesApi';
+import { useHeroes } from 'hooks/heroesContext';
 
 export const Heroes = () => {
   const { heroes, setHeroes } = useHeroes();
@@ -50,9 +50,7 @@ export const Heroes = () => {
 
       <HeroesList heroes={heroes} />
 
-      {count > 1 && (
-        <Pagination page={page} count={count} onChange={handleChangePage} />
-      )}
+      {count > 1 && <Pagination page={page} count={count} onChange={handleChangePage} />}
     </>
   );
 };

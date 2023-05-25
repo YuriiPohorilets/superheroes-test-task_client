@@ -1,28 +1,21 @@
-import { useState, useEffect } from "react";
-import { useDropzone } from "react-dropzone";
-import { Box, Typography } from "@mui/material";
-import {
-  inputWrapper,
-  thumbsContainer,
-  thumb,
-  thumbInner,
-  img,
-  text,
-} from "./dropzoneStyles";
+import { useState, useEffect } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { Box, Typography } from '@mui/material';
+import { inputWrapper, thumbsContainer, thumb, thumbInner, img, text } from './dropzoneStyles';
 
 export const Dropzone = ({ setFieldValue }) => {
   const [files, setFiles] = useState([]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/jpeg": [".jpeg", ".png"],
+      'image/jpeg': ['.jpeg', '.png'],
     },
 
-    onDrop: (acceptedFiles) => {
-      setFieldValue("images", acceptedFiles);
+    onDrop: acceptedFiles => {
+      setFieldValue('images', acceptedFiles);
 
       setFiles(
-        acceptedFiles.map((file) =>
+        acceptedFiles.map(file =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           })
@@ -40,12 +33,10 @@ export const Dropzone = ({ setFieldValue }) => {
 
   return (
     <Box>
-      <Box {...getRootProps({ className: "dropzone" })} sx={inputWrapper}>
+      <Box {...getRootProps({ className: 'dropzone' })} sx={inputWrapper}>
         <input {...getInputProps()} />
 
-        <Typography sx={text}>
-          Drag 'n' drop some images here, or click to select images
-        </Typography>
+        <Typography sx={text}>Drag 'n' drop some images here, or click to select images</Typography>
       </Box>
 
       <Box sx={thumbsContainer}>
