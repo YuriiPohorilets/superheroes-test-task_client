@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/superheroes-test-task_client/static/css/main.91edc0fa.css",
-    "main.js": "/superheroes-test-task_client/static/js/main.8b9521bb.js",
+    "main.js": "/superheroes-test-task_client/static/js/main.3c78083f.js",
     "static/js/251.b06e5d3b.chunk.js": "/superheroes-test-task_client/static/js/251.b06e5d3b.chunk.js",
     "static/media/noImg.jpg": "/superheroes-test-task_client/static/media/noImg.2aab9f224c1cbd4babfb.jpg",
     "index.html": "/superheroes-test-task_client/index.html",
     "main.91edc0fa.css.map": "/superheroes-test-task_client/static/css/main.91edc0fa.css.map",
-    "main.8b9521bb.js.map": "/superheroes-test-task_client/static/js/main.8b9521bb.js.map",
+    "main.3c78083f.js.map": "/superheroes-test-task_client/static/js/main.3c78083f.js.map",
     "251.b06e5d3b.chunk.js.map": "/superheroes-test-task_client/static/js/251.b06e5d3b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.91edc0fa.css",
-    "static/js/main.8b9521bb.js"
+    "static/js/main.3c78083f.js"
   ]
 }
