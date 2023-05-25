@@ -33,7 +33,7 @@ export const mediaWrapper = {
 
 export const imgWrapper = {
   maxWidth: '360px',
-  height: '500px',
+  maxHeight: '500px',
 
   flex: '1 0 auto',
 

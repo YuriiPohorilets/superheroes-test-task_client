@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { outlinedBtn, containedBtn } from 'shared/commonStyles';
 
-export const AlertDialog = ({ children, isOpen, onClick, heroId, handleClose }) => {
+export const AlertDialog = ({ children, isOpen, onClick, heroId, id, handleClose }) => {
   return (
     <Dialog
       open={isOpen}
@@ -23,7 +23,7 @@ export const AlertDialog = ({ children, isOpen, onClick, heroId, handleClose }) 
         </Button>
 
         <Button
-          onClick={() => onClick(heroId)}
+          onClick={() => onClick(heroId, id)}
           variant="outlined"
           autoFocus
           sx={{

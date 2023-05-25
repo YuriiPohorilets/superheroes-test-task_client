@@ -6,7 +6,8 @@ import { ImageList } from 'components/ImagesList/ImagesList';
 import { HeroTools } from 'components/HeroTools/HeroTools';
 import { Dropzone } from 'components/Dropzone/Dropzone';
 import { Loader } from 'components/Loader/Loader';
-import { updateHero } from 'services/heroesApi';
+import { AlertDialog } from 'components/AlertDialog/AlertDialog';
+import { updateHero, deleteImage } from 'services/heroesApi';
 import { createHeroSchema } from 'schemas/createHeroSchema';
 import NoImg from 'img/noImg.jpg';
 import {
@@ -26,8 +27,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenDialog }) => {
   const [heroImages, setHeroImages] = useState(hero.images);
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [prevImg, setPrevImg] = useState(heroImages[0]);
   const [isLoading, setIsLoading] = useState(false);
+  const [imgUrl, setImgUrl] = useState(null);
 
   const initialValues = {
     nickname: hero.nickname,
@@ -35,18 +38,18 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
     originDescription: hero.originDescription,
     superpowers: hero.superpowers,
     catchPhrase: hero.catchPhrase,
-    images: hero.images,
+    images: heroImages,
   };
 
   const { handleSubmit, handleChange, setFieldValue, values, touched, errors } = useFormik({
     initialValues: initialValues,
     validationSchema: createHeroSchema,
 
-    onSubmit: async newHero => {
+    onSubmit: async () => {
       setIsLoading(true);
-      console.log(values);
+
       const updatedHero = await updateHero(heroId, values);
-      console.log(newHero);
+
       if (updatedHero.error) {
         toast(updatedHero.error.message, {
           autoClose: 2000,
@@ -56,15 +59,27 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
         return;
       }
 
+      setHeroImages(updatedHero.images);
       setIsLoading(false);
       handleEdit(false);
     },
   });
 
-  const handleClickImg = imgUrl => setPrevImg(imgUrl);
+  const handleChangePrev = imgUrl => setPrevImg(imgUrl);
 
-  const handleDeleteImg = imgUrl => {
-    setHeroImages(prevImg => prevImg.filter(image => image !== imgUrl));
+  const handleClickOpen = url => {
+    setIsOpenDialog(!isOpenDialog);
+    setImgUrl(url);
+  };
+
+  const handleDeleteImage = async (heroId, imgId) => {
+    setIsLoading(true);
+
+    const images = await deleteImage(heroId, imgId);
+
+    setIsLoading(false);
+    setHeroImages(images);
+    setIsOpenDialog(!isOpenDialog);
   };
 
   return (
@@ -81,6 +96,16 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
         </Box>
 
         {isLoading && <Loader />}
+
+        <AlertDialog
+          onClick={handleDeleteImage}
+          isOpen={isOpenDialog}
+          heroId={heroId}
+          id={imgUrl}
+          handleClose={handleClickOpen}
+        >
+          Are you sure you want to delete this image?
+        </AlertDialog>
 
         <Box sx={mediaWrapper}>
           <Box sx={imgWrapper}>
@@ -100,8 +125,8 @@ export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenD
           <ImageList
             images={heroImages}
             isEditing={isEditing}
-            onClick={handleClickImg}
-            deleteImg={handleDeleteImg}
+            changePrev={handleChangePrev}
+            handleClickOpen={handleClickOpen}
           />
         </Box>
 

@@ -18,7 +18,6 @@ export const list = {
 export const item = {
   position: 'relative',
 
-  // width: "100px",
   maxHeight: '300px',
   flexBasis: 'calc((100% - 16px) / 3)',
 
@@ -29,9 +28,14 @@ export const item = {
 };
 
 export const iconWrapper = {
+  '&:hover': { bgcolor: 'primary.accent' },
+
   position: 'absolute',
   top: '8px',
   right: '8px',
+
+  bgcolor: 'neutral.accent',
+  borderRadius: '10px',
 };
 
 export const icon = {
