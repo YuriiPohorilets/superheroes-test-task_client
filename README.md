@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+**Читати іншою мовою: [Українська](README.md), [English](README.en.md).**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Superheroes | Frontend
 
-## Available Scripts
+Це клієнтська частина проекту **Superheroes**. Цей клієнт надає інтерфейс користувача для перегляду
+та управління інформацією про супергероїв.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+# [Жива сторінка](https://yuriipohorilets.github.io/superheroes-test-task_client/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Огляд додатку
 
-### `npm test`
+![Огляд сторінки](./assets/prev-3.gif)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Реалізація проекту
 
-### `npm run build`
+- Проект зібраний за допомогою [create-react-app](https://create-react-app.dev/).
+- Компоненти створені з використанням бібліотеки
+  [MUI](https://mui.com/material-ui/getting-started/overview/)
+- [Backend](https://github.com/YuriiPohorilets/superheroes-test-task_server) реалізовано за
+  допомогою [Node.js](https://nodejs.org/en).
+- Форми та валідація створені з використанням бібліотек [Formik](https://formik.org/) та
+  [Yup](https://github.com/jquense/yup).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Реалізовано:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Головна сторінка `Main`, з коротким описом про додаток
+2. Сторінка `Heroes`, на якій відображаються картки з зображеннями та іменами супергероїв
+3. Кнопка `Create hero` з можливістю створення нового героя
+4. Пагінація як, при запиті на `backend`, так і при відмалюванні карток на сторінці
+5. При натисканні на картку, відображається сторінка з детальною інформацією про героя
+6. Кнопа `Back` для повернення на попередню сторінку
+7. Галерея з усіма зображеннями героя, детальна інформація про героя (nickname, real name,
+   descritpion, superpowers, catch phrase)
+8. Кнопка `Edit`, яка дає можливіть редагувати дані про героя, додавати та видаляти зображення
+9. Кнопка `Delete hero`, яка дає можливіть видалити героя
+10. Автоматичне перенаправлення користувача у випадку переходу на неіснуючій `route`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Стек технологій
 
-### `npm run eject`
+[![JavaScrip](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)](#)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
+[![MUI](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white)](#)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# [Backend repository](https://github.com/YuriiPohorilets/superheroes-test-task_server)

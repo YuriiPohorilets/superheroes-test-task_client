@@ -27,10 +27,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const HeroCard = ({ hero, isEditing, heroId, handleEdit, handleClickOpenDialog }) => {
   const [heroImages, setHeroImages] = useState(hero.images);
-  const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [prevImg, setPrevImg] = useState(heroImages[0]);
-  const [isLoading, setIsLoading] = useState(false);
   const [imgUrl, setImgUrl] = useState(null);
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
     nickname: hero.nickname,

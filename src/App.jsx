@@ -1,13 +1,19 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from 'components/Layout/Layout';
-import { Home } from 'pages/Home/Home';
-import { HeroDetails } from 'pages/HeroDetails/HeroDetails';
+import { Home } from 'pages/Home';
 
 const Heroes = lazy(() =>
-  import('pages/Heroes/Heroes').then(module => ({
+  import('pages/Heroes').then(module => ({
     ...module,
     default: module.Heroes,
+  }))
+);
+
+const HeroDetails = lazy(() =>
+  import('pages/HeroDetails').then(module => ({
+    ...module,
+    default: module.HeroDetails,
   }))
 );
 
