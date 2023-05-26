@@ -1,5 +1,6 @@
-import { List, Typography } from '@mui/material';
+import { List } from '@mui/material';
 import { HeroesItem } from 'components/HeroesItem/HeroesItem';
+import { ErrorMsg } from 'components/ErrorMsg/ErrorMsg';
 import { list } from './heroListStyles';
 
 export const HeroesList = ({ heroes }) => {
@@ -12,7 +13,7 @@ export const HeroesList = ({ heroes }) => {
           ))}
         </List>
       ) : (
-        <Typography>Oops! Something went wrong.</Typography>
+        <ErrorMsg />
       )}
     </>
   );
